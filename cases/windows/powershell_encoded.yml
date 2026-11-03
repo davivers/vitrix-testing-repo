@@ -1,0 +1,39 @@
+cases:
+  - name: Positive · powershell -enc
+    expect: match
+    event:
+      Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+      CommandLine: 'powershell.exe -enc JABzAD0ATgBlAHcA'
+      ParentImage: 'C:\Windows\explorer.exe'
+
+  - name: Positive · -EncodedCommand in upper case
+    expect: match
+    event:
+      Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\POWERSHELL.EXE'
+      CommandLine: 'POWERSHELL.EXE -EncodedCommand JABzAD0ATgBlAHcA'
+
+  - name: Negative · powershell -File backup.ps1
+    expect: no_match
+    event:
+      Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+      CommandLine: 'powershell.exe -File C:\scripts\backup.ps1'
+
+  - name: Negative · another binary with the same argument
+    expect: no_match
+    event:
+      Image: 'C:\Windows\notepad.exe'
+      CommandLine: 'notepad.exe -enc'
+
+  - name: False positive · encoded script from the SCCM agent
+    kind: false_positive
+    expect: no_match
+    event:
+      Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+      CommandLine: 'powershell.exe -NoLogo -enc JABjAG0AcwA='
+      ParentImage: 'C:\Windows\CCM\CcmExec.exe'
+
+  - name: Edge · event without CommandLine
+    kind: edge
+    expect: no_match
+    event:
+      Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
