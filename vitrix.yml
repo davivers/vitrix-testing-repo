@@ -68,5 +68,5 @@ auth:
 
 # Local drafts: "Save draft" in the Editor keeps unfinished rules in .vitrix/drafts.db (never in
 # rules/). Without accounts they work only for a browser on this machine with a localhost-only server.
-# drafts:
-#   enabled: true
+drafts:
+   enabled: true
