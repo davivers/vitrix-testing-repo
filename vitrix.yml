@@ -60,11 +60,11 @@ quality_gate:
 # after that people can join ONLY by invitation (no open sign-up).
 # GitHub sign-in needs a GitHub OAuth app: set VITRIX_GITHUB_CLIENT_ID and
 # VITRIX_GITHUB_CLIENT_SECRET (callback: <public url>/api/auth/github/callback).
-# auth:
-#   enabled: true
-#   session_days: 14
-#   github_login: true
-#   workspace_name: Detection workspace
+auth:
+   enabled: true
+   session_days: 14
+   github_login: true
+   workspace_name: Detection workspace
 
 # Local drafts: "Save draft" in the Editor keeps unfinished rules in .vitrix/drafts.db (never in
 # rules/). Without accounts they work only for a browser on this machine with a localhost-only server.
