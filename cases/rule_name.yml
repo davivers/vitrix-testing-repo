@@ -1,0 +1,22 @@
+cases:
+  - name: Positive · powershell -enc
+    expect: match
+    event:
+      Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+      CommandLine: 'powershell.exe -enc JABz'
+  - name: Negative · plain cmd
+    expect: no_match
+    event:
+      Image: 'C:\Windows\System32\cmd.exe'
+      CommandLine: 'cmd.exe /c dir'
+  - name: False positive · legitimate admin script
+    kind: false_positive
+    expect: no_match
+    event:
+      Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+      CommandLine: 'powershell.exe -File C:\scripts\inventory.ps1'
+  - name: Edge · event without CommandLine
+    kind: edge
+    expect: no_match
+    event:
+      Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
